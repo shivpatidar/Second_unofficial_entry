@@ -118,6 +118,7 @@ for i=1:1:size(QRS,2)-3
         ecg_seg2(i,:)=ecg((QRS(1,i+1)-(0.2*fs)):(QRS(1,i+1)-(0.2*fs)+samp_len-1));
 end
 end
+try
 [m,n]=size(ecg_seg2);
     tdata=reshape(ecg_seg2,1,m*n);
     if m<10
@@ -137,6 +138,9 @@ ARorder = 4;
 MODWPTlevel = 4;
 [feat,featureindices] = ...
     helperExtractFeatures(train,timeWindow,ARorder,MODWPTlevel);
+    catch
+    feat=ones(1,229);
+    end
 end
 
 function [filt_signal1] = BP_filter_ECG(ecg,fs)
